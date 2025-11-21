@@ -1,0 +1,23 @@
+{
+  "name": "spa-wordly",
+  "version": "1.0.0",
+  "description": "Summative Lab for SE03-PT-01 // Front-End Development: Javascript Interactions- Single Page Application - Wordly",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaburbank/SPA-Wordly.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaburbank/SPA-Wordly/issues"
+  },
+  "homepage": "https://github.com/kaburbank/SPA-Wordly#readme",
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+}
