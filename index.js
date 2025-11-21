@@ -39,16 +39,18 @@ async function fetchWordData(word) {
         if (!response.ok) {
             if (response.status === 404) {
                 throw new Error(`${word} is not found in the dictionary`);
-            }
-            throw new Error('Network response error');
+            } throw new Error('Network response error');
         };
-
         const data = await response.json();
         return data[0];
         } catch (error) {
             throw new Error(error.message);
     };
 };
+
+//Create event Listeners for submit and playing audio
+searchForm.addEventListener('submit', formSubmission);
+audioButton.addEventListener('click', playAudio);
 
 //Define function to display results for audio, definitions, and synonyms
 function displayResults(data) {
@@ -75,7 +77,6 @@ function displayResults(data) {
     const allSynonyms = data.meanings
         .flatMap(meaning => meaning.synonyms)
         .filter((synonym, index, self) => self.indexOf(synonym) === index);
-
     if (allSynonyms.length > 0) {
         displaySynonyms(allSynonyms);
     };
@@ -128,7 +129,7 @@ function displaySynonyms(synonyms) {
     });
 };
 
-// Play audio pronunciation
+//Define function to play audio pronunciation
 function playAudio() {
     const audio = new Audio(audioButton.dataset.audioUrl);
     audio.play().catch(error => {
@@ -137,7 +138,7 @@ function playAudio() {
     });
 };
 
-// Show error message
+//Define function to show error message
 function showError(message) {
     errorMessage.textContent = message;
     errorMessage.hidden = false;
@@ -145,11 +146,7 @@ function showError(message) {
     synonymsContainer.hidden = true;
 };
 
-//Create event Listeners for submit and playing audio
-searchForm.addEventListener('submit', formSubmission);
-audioButton.addEventListener('click', playAudio);
-
-// Clear previous results
+//Define function to clear previous results
 function clearResults() {
     errorMessage.hidden = true;
     definitionsContainer.innerHTML = '';
