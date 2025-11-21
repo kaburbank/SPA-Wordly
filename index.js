@@ -1,7 +1,7 @@
 //Define the DOM Elements and API Url
 const searchForm = document.getElementById('search-form');
 const wordInput = document.getElementById('word-input');
-const resultsSection = document.getElementById('results');
+const resultsSection = document.getElementById('results-section');
 const errorMessage = document.getElementById('error');
 const wordDetails = document.getElementById('word-details');
 const wordTitle = document.getElementById('word-title');
