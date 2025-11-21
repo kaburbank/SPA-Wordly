@@ -154,3 +154,12 @@ function clearResults() {
     synonymsList.innerHTML = '';
 };
 
+//Define function to save favorites using local storage
+function saveFavorite(word) {
+  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  if (!favorites.includes(word)) {
+    favorites.push(word);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    renderFavorites();
+  };
+};
