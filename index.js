@@ -38,7 +38,7 @@ async function fetchWordData(word) {
         const response = await fetch(`${API_BASE_URL}${word}`);
         if (!response.ok) {
             if (response.status === 404) {
-                throw new Error(`${word} not found in dictionary`);
+                throw new Error(`${word} is not found in dictionary`);
             }
             throw new Error('Network response error');
         };
