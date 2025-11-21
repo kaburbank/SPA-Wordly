@@ -1,4 +1,4 @@
-//Define the DOM Elements
+//Define the DOM Elements and API Url
 const searchForm = document.getElementById('search-form');
 const wordInput = document.getElementById('word-input');
 const resultsSection = document.getElementById('results');
@@ -32,13 +32,13 @@ async function formSubmission(event) {
     wordInput.value = '';
 };
 
-//Define asyn function to fetch word data from API
+//Define async function to fetch word data from API
 async function fetchWordData(word) {
     try {
         const response = await fetch(`${API_BASE_URL}${word}`);
         if (!response.ok) {
             if (response.status === 404) {
-                throw new Error(`${word} is not found in dictionary`);
+                throw new Error(`${word} is not found in the dictionary`);
             }
             throw new Error('Network response error');
         };
@@ -50,13 +50,13 @@ async function fetchWordData(word) {
     };
 };
 
-//Define function to display results
+//Define function to display results for audio, definitions, and synonyms
 function displayResults(data) {
     clearResults();
     wordDetails.hidden = false; 
     wordTitle.textContent = data.word; 
 
-    //Handle audio data
+    //Display audio data
     const audioUrl = data.phonetics.find(p => p.audio)?.audio;
     if (audioUrl) {
         audioButton.hidden = false;
@@ -86,29 +86,32 @@ function createDefinitionElement(meaning) {
     const div = document.createElement('div');
     div.className = 'definition-item';
 
+    //Add part of speech
     const partOfSpeech = document.createElement('div');
     partOfSpeech.className = 'part-of-speech';
     partOfSpeech.textContent = meaning.partOfSpeech;
     div.appendChild(partOfSpeech);
 
+   //Add definitions
     meaning.definitions.forEach(def => {
         const definitionText = document.createElement('div');
         definitionText.className = 'definition-text';
         definitionText.textContent = def.definition;
         div.appendChild(definitionText);
 
+        //Add example if available
         if (def.example) {
             const example = document.createElement('div');
             example.className = 'example';
             example.textContent = `example: ${def.example}`;
             div.appendChild(example);
-        }
+        };
     });
 
     return div;
 };
 
-//Define function to display synonyms
+//Define function to display clickable synonyms list
 function displaySynonyms(synonyms) {
     synonymsContainer.hidden = false;
     synonymsList.innerHTML = '';

@@ -126,6 +126,7 @@ button:hover {
 
 .synonym-tag {
     padding: 0.3rem 0.8rem;
+    cursor: pointer;
 }
 
 .error-message {
