@@ -32,6 +32,10 @@ async function formSubmission(event) {
     wordInput.value = '';
 };
 
+//Create event listeners for submit and playing audio
+searchForm.addEventListener('submit', formSubmission);
+audioButton.addEventListener('click', playAudio);
+
 //Define async function to fetch word data from API
 async function fetchWordData(word) {
     try {
@@ -45,40 +49,6 @@ async function fetchWordData(word) {
         return data[0];
         } catch (error) {
             throw new Error(error.message);
-    };
-};
-
-//Create event listeners for submit and playing audio
-searchForm.addEventListener('submit', formSubmission);
-audioButton.addEventListener('click', playAudio);
-
-//Define function to display results for audio, definitions, and synonyms
-function displayResults(data) {
-    clearResults();
-    wordDetails.hidden = false; 
-    wordTitle.textContent = data.word; 
-
-    //Display audio data
-    const audioUrl = data.phonetics.find(p => p.audio)?.audio;
-    if (audioUrl) {
-        audioButton.hidden = false;
-        audioButton.dataset.audioUrl = audioUrl;
-    } else {
-        audioButton.hidden = true;
-    };
-
-    //Display definitions
-    data.meanings.forEach(meaning => {
-        const definitionItem = createDefinitionElement(meaning);
-        definitionsContainer.appendChild(definitionItem);
-    });
-
-    //Display synonyms
-    const allSynonyms = data.meanings
-        .flatMap(meaning => meaning.synonyms)
-        .filter((synonym, index, self) => self.indexOf(synonym) === index);
-    if (allSynonyms.length > 0) {
-        displaySynonyms(allSynonyms);
     };
 };
 
@@ -129,6 +99,37 @@ function displaySynonyms(synonyms) {
     });
 };
 
+
+//Define function to display results for audio, definitions, and synonyms
+function displayResults(data) {
+    clearResults();
+    wordDetails.hidden = false; 
+    wordTitle.textContent = data.word; 
+
+    //Display audio data
+    const audioUrl = data.phonetics.find(p => p.audio)?.audio;
+    if (audioUrl) {
+        audioButton.hidden = false;
+        audioButton.dataset.audioUrl = audioUrl;
+    } else {
+        audioButton.hidden = true;
+    };
+
+    //Display definitions
+    data.meanings.forEach(meaning => {
+        const definitionItem = createDefinitionElement(meaning);
+        definitionsContainer.appendChild(definitionItem);
+    });
+
+    //Display synonyms
+    const allSynonyms = data.meanings
+        .flatMap(meaning => meaning.synonyms)
+        .filter((synonym, index, self) => self.indexOf(synonym) === index);
+    if (allSynonyms.length > 0) {
+        displaySynonyms(allSynonyms);
+    };
+};
+
 //Define function to play audio pronunciation
 function playAudio() {
     const audio = new Audio(audioButton.dataset.audioUrl);
@@ -154,12 +155,3 @@ function clearResults() {
     synonymsList.innerHTML = '';
 };
 
-//Define function to save favorites using local storage
-function saveFavorite(word) {
-  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-  if (!favorites.includes(word)) {
-    favorites.push(word);
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-    renderFavorites();
-  };
-};
