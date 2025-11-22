@@ -48,7 +48,7 @@ async function fetchWordData(word) {
     };
 };
 
-//Create event Listeners for submit and playing audio
+//Create event listeners for submit and playing audio
 searchForm.addEventListener('submit', formSubmission);
 audioButton.addEventListener('click', playAudio);
 
