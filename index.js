@@ -82,24 +82,6 @@ function createDefinitionElement(meaning) {
     return div;
 };
 
-//Define function to display clickable synonyms list
-function displaySynonyms(synonyms) {
-    synonymsContainer.hidden = false;
-    synonymsList.innerHTML = '';
-
-    synonyms.forEach(synonym => {
-        const tag = document.createElement('span');
-        tag.className = 'synonym-tag';
-        tag.textContent = synonym;
-        tag.addEventListener('click', () => {
-            wordInput.value = synonym;
-            formSubmission(new Event('submit'));
-        });
-        synonymsList.appendChild(tag);
-    });
-};
-
-
 //Define function to display results for audio, definitions, and synonyms
 function displayResults(data) {
     clearResults();
@@ -128,6 +110,23 @@ function displayResults(data) {
     if (allSynonyms.length > 0) {
         displaySynonyms(allSynonyms);
     };
+};
+
+//Define function to display clickable synonyms list
+function displaySynonyms(synonyms) {
+    synonymsContainer.hidden = false;
+    synonymsList.innerHTML = '';
+
+    synonyms.forEach(synonym => {
+        const tag = document.createElement('span');
+        tag.className = 'synonym-tag';
+        tag.textContent = synonym;
+        tag.addEventListener('click', () => {
+            wordInput.value = synonym;
+            formSubmission(new Event('submit'));
+        });
+        synonymsList.appendChild(tag);
+    });
 };
 
 //Define function to play audio pronunciation
