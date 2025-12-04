@@ -154,3 +154,12 @@ function clearResults() {
     synonymsList.innerHTML = '';
 };
 
+//Add input validation
+wordInput.addEventListener('input', () => {
+    const word = wordInput.value.trim();
+    if (word) {
+        wordInput.setCustomValidity('');
+    } else {
+        wordInput.setCustomValidity('Please enter a word to search');
+    };
+});
